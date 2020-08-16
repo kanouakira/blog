@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kanouakira.mapper.TagMapper">
+
+    <resultMap id="tagMap" type="cn.kanouakira.entity.Tag">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="category_id" property="categoryId"/>
+        <association property="category" column="category_id" javaType="cn.kanouakira.entity.Category" select="cn.kanouakira.mapper.CategoryMapper.selectCategoryById"/>
+    </resultMap>
+
+    <select id="selectTagPage" resultMap="tagMap">
+        SELECT * FROM tag
+    </select>
+
+    <!--    嵌套查询分类下的标签名-->
+    <select id="getTagsByCategoryId" resultType="cn.kanouakira.entity.Tag" parameterType="java.lang.Long">
+        select tag.*,category.* from category left join tag on category.id = tag.category_id where category.id = #{id}
+    </select>
+
+    <!--    嵌套查询文章的标签-->
+    <select id="getTagsByPostId" resultType="cn.kanouakira.entity.Tag" parameterType="java.lang.Long">
+        SELECT * FROM tag_relationship left join tag on tag_relationship.tag_id = tag.id where tag_relationship.post_id = #{id}
+    </select>
+
+</mapper>

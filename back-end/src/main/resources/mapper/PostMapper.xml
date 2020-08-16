@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kanouakira.mapper.PostMapper">
+    <resultMap id="postMap" type="cn.kanouakira.entity.Post">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="summary" property="summary"/>
+        <result column="body" property="body"/>
+        <result column="created" property="created"/>
+        <result column="views" property="views"/>
+        <result column="author_id" property="authorId"/>
+        <result column="only_self_visible" property="onlySelfVisible"/>
+        <association property="user" column="author_id" javaType="cn.kanouakira.entity.User" select="cn.kanouakira.mapper.UserMapper.selectUserById"/>
+        <collection property="tags" column="id" ofType="cn.kanouakira.entity.Tag" select="cn.kanouakira.mapper.TagMapper.getTagsByPostId"/>
+        <collection property="comments" column="id" ofType="cn.kanouakira.entity.Comment" select="cn.kanouakira.mapper.CommentMapper.getComments"/>
+    </resultMap>
+
+    <!--    根据文章标签查询-->
+    <select id="selectPostPage" resultMap="postMap" parameterType="java.lang.Long">
+        SELECT post.*,user.* FROM post left join user on post.author_id = user.id
+        <if test="manage == ''">
+        where post.id in
+        (select post.id from tag_relationship
+        left join tag on tag_relationship.tag_id = tag.id
+        left join post on tag_relationship.post_id = post.id
+        where (post.only_self_visible = '0' <if test="id != null">or post.author_id = #{id} </if>) and tag.name like concat('%',#{tag},'%')
+        union
+        select id from post where id not in (select post_id from tag_relationship ) and (only_self_visible = '0' <if test="id != null">or author_id = #{id}</if>))
+        <if test="search != ''">and post.title like concat('%',#{search},'%')</if>
+        </if>
+        order by post.created desc
+    </select>
+
+    <!--    根据id返回文章-->
+    <select id="selectPostById" resultMap="postMap" parameterType="java.lang.Long">
+        SELECT * FROM post left join user on post.author_id = user.id where post.id = #{id}
+    </select>
+
+    <!--    根据id更新文章-->
+    <update id="updatePost" parameterType="cn.kanouakira.entity.Post">
+        update post
+        <set>
+            <if test="title != null">title=#{title},</if>
+            <if test="body != null">body = #{body},</if>
+            <if test="summary != null">summary = #{summary},</if>
+            <if test="created != null">created = #{created},</if>
+            <if test="views != null">views = #{views},</if>
+            <if test="onlySelfVisible != null">only_self_visible = #{onlySelfVisible},</if>
+            <if test="authorId != null">author_id = #{authorId},</if>
+        </set>
+        where
+        id = #{id}
+    </update>
+
+
+
+
+</mapper>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kanouakira.mapper.CategoryMapper">
+
+    <resultMap id="categoryMap" type="cn.kanouakira.entity.Category">
+        <id column="id" property="id"/>
+        <result column="category" property="category"/>
+    </resultMap>
+
+    <resultMap id="categoryDetailMap" type="cn.kanouakira.entity.Category">
+        <id column="id" property="id"/>
+        <result column="category" property="category"/>
+        <collection property="tags" column="id" ofType="cn.kanouakira.entity.Tag" select="cn.kanouakira.mapper.TagMapper.getTagsByCategoryId"/>
+    </resultMap>
+
+    <select id="selectCategoryPage" resultMap="categoryDetailMap" parameterType="java.lang.Long">
+        select * from category
+    </select>
+
+<!--    根据Id获取标签名-->
+    <select id="selectCategoryById" resultMap="categoryMap" parameterType="java.lang.Long">
+        select * from category where id = #{id}
+    </select>
+
+</mapper>
