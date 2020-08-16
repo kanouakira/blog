@@ -1,2 +1,6 @@
-# PersonalBlog
-Vue/Springboot 前后端分离
+# To-do List
+- [x] rebuild part of interface
+- [x] test interface
+- [ ] Swagger
+- [ ] rebuild vue project part
+
