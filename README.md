@@ -1,6 +1,7 @@
 # To-do List
-- [x] rebuild part of interface
+- [ ] rebuild part of interface
 - [x] test interface
-- [ ] Swagger
+- [x] Swagger
 - [ ] rebuild vue project part
 
+2020/09/20 there is some controller need to complete

@@ -24,10 +24,10 @@ public class UserTest {
      */
     @Test
     public void testSelectUserPage(){
-        PageHelper.startPage(1, 1);
-        List<User> users = userService.selectUserPage();
-        PageInfo<User> pageInfo = new PageInfo<>(users);
-        System.out.println(pageInfo);
+//        PageHelper.startPage(1, 1);
+//        List<User> users = userService.selectUserPage();
+//        PageInfo<User> pageInfo = new PageInfo<>(users);
+//        System.out.println(pageInfo);
     }
 
     /**

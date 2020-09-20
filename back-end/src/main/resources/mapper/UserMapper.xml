@@ -19,7 +19,48 @@
     </select>
 
     <!--    根据id返回用户-->
-    <select id="selectUserById" resultMap="userMap" parameterType="java.lang.Long">
+    <select id="selectUserById" resultMap="userMap" parameterType="long">
         select user.*,role.rolename as role_name from user left join role on user.status = role.id where user.id = #{id}
     </select>
+
+    <!--    查询username是否存在-->
+    <select id="isUserNameExist" resultType="boolean" parameterType="java.lang.String">
+        select count(username) from user where username = #{username}
+    </select>
+
+    <!--    新增用户-->
+    <insert id="saveUser" parameterType="cn.kanouakira.entity.User">
+        insert into user(username, email, password) values(#{username},#{email},#{password})
+    </insert>
+
+    <!--    更新用户-->
+    <update id="updateUser" parameterType="cn.kanouakira.entity.User">
+        UPDATE  `user`
+        <set >
+            <if test="username != null" >
+                `username` = #{username},
+            </if>
+            <if test="name != null" >
+                `name` = #{name},
+            </if>
+            <if test="password != null" >
+                `password` = #{password},
+            </if>
+            <if test="avatar != null" >
+                `avatar` = #{avatar},
+            </if>
+            <if test="status != null" >
+                `status` = #{status},
+            </if>
+            <if test="email != null" >
+                `email` = #{email},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+<!--    根据id删除用户-->
+    <delete id="deleteUserById" parameterType="long">
+        delete from user where id = #{id}
+    </delete>
 </mapper>

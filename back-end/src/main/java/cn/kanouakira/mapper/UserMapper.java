@@ -28,5 +28,33 @@ public interface UserMapper {
      * @param id
      * @return
      */
-    User selectUserById(Long id);
+    User selectUserById(long id);
+
+    /**
+     * 查询username是否存在
+     * @param username
+     * @return
+     */
+    boolean isUserNameExist(String username);
+
+    /**
+     * 新增用户
+     * @param user
+     * @return
+     */
+    boolean saveUser(User user);
+
+    /**
+     * 更新用户
+     * @param user
+     * @return
+     */
+    boolean updateUser(User user);
+
+    /**
+     * 根据id删除用户
+     * @param id
+     * @return
+     */
+    boolean deleteUserById(long id);
 }
