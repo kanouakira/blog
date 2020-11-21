@@ -4,12 +4,10 @@ import cn.kanouakira.common.lang.PageRequest;
 import cn.kanouakira.common.lang.PageResult;
 import cn.kanouakira.common.utils.PageUtils;
 import cn.kanouakira.entity.Post;
-import cn.kanouakira.entity.User;
 import cn.kanouakira.mapper.PostMapper;
 import cn.kanouakira.service.PostService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

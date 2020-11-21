@@ -33,7 +33,10 @@
 
     <!--    保存文章-->
     <insert id="savePost" parameterType="cn.kanouakira.entity.Post">
-        INSERT INTO `post`(title,summary,body,onlySelfVisible,authorId) values(#{title},#{summary},#{body},#{onlySelfVisible},#{authorId})
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO `post`(title,summary,body,only_self_visible,author_id) values(#{title},#{summary},#{body},#{onlySelfVisible},#{authorId})
     </insert>
 
     <!--    根据id返回文章-->

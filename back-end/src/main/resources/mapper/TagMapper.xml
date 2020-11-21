@@ -39,14 +39,14 @@
         select tag.*,category.* from category left join tag on category.id = tag.category_id where category.id = #{id}
     </select>
 
-    <!--    更新用户-->
+    <!--    更新标签-->
     <update id="updateTag" parameterType="cn.kanouakira.entity.Tag">
         UPDATE  `tag`
         <set >
             <if test="name != null" >
                 `name` = #{name},
             </if>
-            <if test="category_id != null" >
+            <if test="categoryId != null" >
                 `category_id` = #{categoryId},
             </if>
         </set>

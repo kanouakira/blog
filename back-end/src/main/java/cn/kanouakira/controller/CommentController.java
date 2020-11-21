@@ -82,10 +82,10 @@ public class CommentController {
     public Result updatePost(@PathVariable("id") Long id, @RequestBody Comment comment){
         //得到servlet中的request
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        // 仅作者可以修改评论内容
-        if (!request.getAttribute("userId").equals(comment.getUserId())){
-            return Result.fail("无修改权限");
-        }
+//        // 仅作者可以修改评论内容
+//        if (!request.getAttribute("userId").equals(comment.getUserId())){
+//            return Result.fail("无修改权限");
+//        }
         comment.setId(id);
         return Result.succ(commentService.updateComment(comment));
     }

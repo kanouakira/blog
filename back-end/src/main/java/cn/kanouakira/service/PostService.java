@@ -3,9 +3,6 @@ package cn.kanouakira.service;
 import cn.kanouakira.common.lang.PageRequest;
 import cn.kanouakira.common.lang.PageResult;
 import cn.kanouakira.entity.Post;
-import org.apache.ibatis.annotations.Param;
-
-import java.util.List;
 
 /**
  * <p>

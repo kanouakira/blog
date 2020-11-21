@@ -101,7 +101,7 @@ public class PostController {
         //得到servlet中的request
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         post.setAuthorId((Long) request.getAttribute("userId"));
-        return Result.succ(postService.savePost(post));
+        return Result.succ(postService.savePost(post) ? post.getId() : null);
     }
     //todo 尚未验证接口是否可用
 
@@ -117,10 +117,10 @@ public class PostController {
     public Result updatePost(@PathVariable("id") Long id,@RequestBody Post post){
         //得到servlet中的request
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        // 仅作者可以修改文章内容
-        if (!request.getAttribute("userId").equals(post.getAuthorId())){
-            return Result.fail("无修改权限");
-        }
+//        // 仅作者可以修改文章内容
+//        if (!request.getAttribute("userId").equals(post.getAuthorId())){
+//            return Result.fail("无修改权限");
+//        }
         post.setId(id);
         if(post.getOnlySelfVisible()){
             ZSetOperations zSetOperations = redisTemplate.opsForZSet();
