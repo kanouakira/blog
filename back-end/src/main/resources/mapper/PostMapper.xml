@@ -19,17 +19,22 @@
     <select id="selectPostPage" resultMap="postMap" parameterType="java.lang.Long">
         SELECT post.*,user.* FROM post left join user on post.author_id = user.id
         <if test="manage == ''">
-        where post.id in
-        (select post.id from tag_relationship
-        left join tag on tag_relationship.tag_id = tag.id
-        left join post on tag_relationship.post_id = post.id
-        where (post.only_self_visible = '0' <if test="id != null">or post.author_id = #{id} </if>) and tag.name like concat('%',#{tag},'%')
-        union
-        select id from post where id not in (select post_id from tag_relationship ) and (only_self_visible = '0' <if test="id != null">or author_id = #{id}</if>))
-        <if test="search != ''">and post.title like concat('%',#{search},'%')</if>
+            where post.id in
+            (select post.id from tag_relationship
+            left join tag on tag_relationship.tag_id = tag.id
+            left join post on tag_relationship.post_id = post.id
+            where (post.only_self_visible = '0' <if test="id != null">or post.author_id = #{id} </if>) and tag.name like concat('%',#{tag},'%')
+            union
+            select id from post where id not in (select post_id from tag_relationship ) and (only_self_visible = '0' <if test="id != null">or author_id = #{id}</if>))
+            <if test="search != ''">and post.title like concat('%',#{search},'%')</if>
         </if>
         order by post.created desc
     </select>
+
+    <!--    保存文章-->
+    <insert id="savePost" parameterType="cn.kanouakira.entity.Post">
+        INSERT INTO `post`(title,summary,body,onlySelfVisible,authorId) values(#{title},#{summary},#{body},#{onlySelfVisible},#{authorId})
+    </insert>
 
     <!--    根据id返回文章-->
     <select id="selectPostById" resultMap="postMap" parameterType="java.lang.Long">
@@ -51,6 +56,10 @@
         where
         id = #{id}
     </update>
+
+    <delete id="removePostById" parameterType="java.lang.Long">
+        delete from post where id = #{id}
+    </delete>
 
 
 

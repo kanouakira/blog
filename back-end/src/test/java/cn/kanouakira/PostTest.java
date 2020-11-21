@@ -25,10 +25,10 @@ public class PostTest {
      */
     @Test
     public void testSelectPostPage(){
-        PageHelper.startPage(1, 2);
-        List<Post> posts = postService.selectPostPage((long) 1,"Java", "manage", "");
-        PageInfo<Post> pageInfo = new PageInfo<>(posts);
-        System.out.println(pageInfo);
+//        PageHelper.startPage(1, 2);
+//        List<Post> posts = postService.selectPostPage((long) 1,"Java", "manage", "");
+//        PageInfo<Post> pageInfo = new PageInfo<>(posts);
+//        System.out.println(pageInfo);
     }
 
     /**

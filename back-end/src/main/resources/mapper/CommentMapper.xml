@@ -27,6 +27,7 @@
         <result column="comment_level" property="commentLevel"/>
         <result column="created" property="created"/>
         <association property="user" column="user_id" javaType="cn.kanouakira.entity.User" select="cn.kanouakira.mapper.UserMapper.selectUserById"/>
+        <association property="replyComment" javaType="cn.kanouakira.entity.Comment" column="reply_comment_id" select="selectReplyCommentById"/>
     </resultMap>
 
     <select id="selectCommentPage" resultMap="commentMap">
@@ -37,6 +38,11 @@
     <!--    根据id返回评论-->
     <select id="selectCommentById" resultMap="commentMap" parameterType="java.lang.Long">
         SELECT * FROM comment where id = #{id} order by created desc
+    </select>
+
+<!--    嵌套查询子评论的父评论内容-->
+    <select id="selectReplyCommentById" resultMap="singleComment">
+        SELECT * FROM comment where id = #{reply_comment_id}
     </select>
 
     <!--    根据id更新评论-->
@@ -62,5 +68,14 @@
     <select id="getChildComments" resultMap="singleComment" parameterType="java.lang.Long">
         SELECT * FROM comment where parent_comment_id = #{id} order by created desc
     </select>
+
+<!--    保存评论-->
+    <insert id="saveComment" parameterType="cn.kanouakira.entity.Comment">
+        insert into comment(user_id,post_id,body,comment_level,parent_comment_id,reply_comment_id) values(#{userId},#{postId},#{body},#{commentLevel},#{parentCommentId},#{replyCommentId})
+    </insert>
+<!--    根据id删除评论-->
+    <delete id="removeCommentById">
+        delete from comment where id = #{id}
+    </delete>
 
 </mapper>

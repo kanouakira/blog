@@ -27,6 +27,13 @@ public interface PostMapper {
                                 @Param("search")String search);
 
     /**
+     * 保存文章
+     * @param post
+     * @return
+     */
+    boolean savePost(Post post);
+
+    /**
      * 根据id返回一篇文章
      * @param id
      * @return
@@ -39,5 +46,12 @@ public interface PostMapper {
      * @return
      */
     Integer updatePost(Post post);
+
+    /**
+     * 根据id删除一篇文章
+     * @param id
+     * @return
+     */
+    Boolean removePostById(Long id);
 
 }

@@ -9,14 +9,49 @@
         <association property="category" column="category_id" javaType="cn.kanouakira.entity.Category" select="cn.kanouakira.mapper.CategoryMapper.selectCategoryById"/>
     </resultMap>
 
+    <!--    选择所有标签分页-->
     <select id="selectTagPage" resultMap="tagMap">
         SELECT * FROM tag
     </select>
+
+    <!--    选择所有标签不分页-->
+    <select id="selectAllTag" resultMap="tagMap">
+        SELECT * FROM tag
+    </select>
+
+    <!--    根据名称查找标签-->
+    <select id="selectTagByName" resultMap="tagMap">
+        select * from tag t where t.name = #{tagName}
+    </select>
+
+    <!--    新增标签-->
+    <insert id="saveTag" parameterType="cn.kanouakira.entity.Tag">
+        insert into tag(name,category_id) values (#{name}, #{categoryId})
+    </insert>
+
+    <!--    根据id删除标签-->
+    <delete id="removeTagById">
+        delete from tag where id = #{id}
+    </delete>
 
     <!--    嵌套查询分类下的标签名-->
     <select id="getTagsByCategoryId" resultType="cn.kanouakira.entity.Tag" parameterType="java.lang.Long">
         select tag.*,category.* from category left join tag on category.id = tag.category_id where category.id = #{id}
     </select>
+
+    <!--    更新用户-->
+    <update id="updateTag" parameterType="cn.kanouakira.entity.Tag">
+        UPDATE  `tag`
+        <set >
+            <if test="name != null" >
+                `name` = #{name},
+            </if>
+            <if test="category_id != null" >
+                `category_id` = #{categoryId},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
 
     <!--    嵌套查询文章的标签-->
     <select id="getTagsByPostId" resultType="cn.kanouakira.entity.Tag" parameterType="java.lang.Long">

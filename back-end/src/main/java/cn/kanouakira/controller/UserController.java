@@ -44,7 +44,7 @@ public class UserController {
     @GetMapping
     public Result getUsers(@RequestParam("page") Integer current_page,
                            @RequestParam("per_page") Integer per_page){
-        final PageRequest pageRequest = new PageRequest(current_page, per_page);
+        PageRequest pageRequest = new PageRequest(current_page, per_page);
         return Result.succ(userService.selectUserPage(pageRequest));
     }
 
@@ -102,7 +102,8 @@ public class UserController {
         if (!StringUtils.isEmpty(user.getPassword())){
             user.setPassword(HashUtil.hash(user.getPassword(),"SHA-256"));
         }
-        return Result.succ(userService.updateUser(user));
+
+        return Result.succ(userService.updateUser(user) ? user : null);
     }
 
     /**

@@ -33,8 +33,8 @@ public class UserServiceImpl implements UserService {
         int pageNum = pageRequest.getPageNum();
         int pageSize = pageRequest.getPageSize();
         PageHelper.startPage(pageNum,pageSize);
-        List<User> sysMenus = userMapper.selectUserPage();
-        return new PageInfo<User>(sysMenus);
+        List<User> userPage = userMapper.selectUserPage();
+        return new PageInfo(userPage);
     }
 
     @Override
@@ -45,6 +45,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isUserNameExist(String username) {
         return userMapper.isUserNameExist(username);
+    }
+
+    @Override
+    public User selectUserByUsername(String username) {
+        return userMapper.selectUserByUsername(username);
     }
 
     @Override

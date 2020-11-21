@@ -34,4 +34,18 @@ public interface CommentMapper {
      * @return
      */
     Integer updateComment(Comment comment);
+
+    /**
+     * 保存新的评论
+     * @param comment
+     * @return
+     */
+    boolean saveComment(Comment comment);
+
+    /**
+     * 根据id删除评论
+     * @param id
+     * @return
+     */
+    boolean removeCommentById(Long id);
 }

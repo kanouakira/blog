@@ -21,6 +21,6 @@ public class TagTest {
      */
     @Test
     public void testSelectTagPage(){
-        tagService.selectTagPage().forEach(tag -> System.out.println(tag));
+//        tagService.selectTagPage().forEach(tag -> System.out.println(tag));
     }
 }

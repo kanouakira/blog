@@ -42,6 +42,13 @@ public interface UserService {
     boolean isUserNameExist(String username);
 
     /**
+     * 根据username返回一个用户
+     * @param username
+     * @return
+     */
+    User selectUserByUsername(String username);
+
+    /**
      * 新增用户
      * @param user
      * @return

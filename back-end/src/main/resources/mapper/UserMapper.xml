@@ -28,6 +28,11 @@
         select count(username) from user where username = #{username}
     </select>
 
+    <!--    检查密码是否正确-->
+    <select id="selectUserByUsername" resultMap="userMap" parameterType="java.lang.String">
+        select * from user where username = #{username}
+    </select>
+
     <!--    新增用户-->
     <insert id="saveUser" parameterType="cn.kanouakira.entity.User">
         insert into user(username, email, password) values(#{username},#{email},#{password})

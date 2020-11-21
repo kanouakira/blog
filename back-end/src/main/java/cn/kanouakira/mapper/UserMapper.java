@@ -2,6 +2,7 @@ package cn.kanouakira.mapper;
 
 import cn.kanouakira.entity.User;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -36,6 +37,13 @@ public interface UserMapper {
      * @return
      */
     boolean isUserNameExist(String username);
+
+    /**
+     * 根据username返回一个用户
+     * @param username
+     * @return
+     */
+    User selectUserByUsername(String username);
 
     /**
      * 新增用户

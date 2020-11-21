@@ -26,8 +26,8 @@ public class TokenServiceImpl implements TokenService {
                 // 添加密码到时候根据这个JWT.require(Algorithm.HMAC256(user.getPassword())).build()返回一个验证器验证是否token合法
                 // 设置token有效期.withExpiresAt(date)
                 .withExpiresAt(nowTime.getTime())
-                .withClaim("iss","Service")
-                .withClaim("aud","Browser")
+//                .withClaim("iss","Service")
+//                .withClaim("aud","Browser")
                 .sign(Algorithm.HMAC256(SECRET_KEY));
         return token;
     }

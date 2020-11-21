@@ -18,6 +18,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
+import java.util.List;
 
 /**
  * 自定义拦截器，获取token并验证
@@ -32,6 +33,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         String token = request.getHeader("token");
         Long userId = null;
         if (token != null){
+            List<String> audience = JWT.decode(token).getAudience();
             // 根据token获取userId存入request域
             userId = Long.valueOf(JWT.decode(token).getAudience().get(0));
             request.setAttribute("userId", userId);
